@@ -15,20 +15,20 @@
         <input
           type="checkbox"
           v-model="todo.completed"
-          @click="pushTodoActive(Number(todo.id))"
+          @click="state.pushTodoActive(Number(todo.id))"
           class="w-[20px] h-[20px]"
         />
 
         <p class="text-lg">{{ todo.title }}</p>
       </div>
-      <span class="text-xl cursor-pointer" @click="deleteTodo(Number(todo.id))">X</span>
+      <span class="text-xl cursor-pointer" @click="state.deleteTodo(Number(todo.id))">X</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useCounterStore } from '@/stores/counter'
-const { pushTodoActive, deleteTodo } = useCounterStore()
+const state = useCounterStore()
 
 interface ITodo {
   userId?: number

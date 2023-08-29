@@ -9,32 +9,41 @@ interface ITodo {
 }
 
 export const useCounterStore = defineStore('counter', {
-  state: (): {
-    Todo: ITodo[]
-  } => ({
-    Todo: []
+  state: () => ({
+    Todo: [] as ITodo[],
+    loading: false
   }),
 
   getters: {
     getTodoCompleted(): ITodo[] {
-      return this.Todo.filter((item: ITodo) => item.completed === true)
+      return this.Todo.filter((item: any) => item.completed === true)
     },
     activeTodo(): ITodo[] {
-      return this.Todo.filter((item: ITodo) => item.completed === false)
+      return this.Todo.filter((item: any) => item.completed === false)
     },
     getAllTodo(): ITodo[] {
       return this.Todo
     },
     getAllLengthTodo(): number {
-      return this.Todo.filter((item: ITodo) => item.completed === false).length
+      return this.Todo.filter((item: any) => item.completed === false).length
     }
   },
 
   actions: {
     async fetchTodo(): Promise<void> {
+      this.loading = true
       await axios.get('https://jsonplaceholder.typicode.com/todos').then((res) => {
         this.Todo = res.data.slice(0, 10)
       })
+      this.loading = false
+    },
+    async clearTodo(): Promise<void> {
+      this.loading = true
+      this.getTodoCompleted.forEach(async (item) => {
+        Promise.all([await this.deleteTodo(Number(item.id))])
+      })
+
+      this.loading = false
     },
     async deleteTodo(id: number): Promise<void> {
       try {
