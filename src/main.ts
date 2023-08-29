@@ -1,16 +1,14 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import './main.css'
-import MorphemeUI from '@morpheme/ui'
-import '@morpheme/themes/dist/morpheme/main.css'
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import "./main.css";
+import "@morpheme/themes/dist/morpheme/main.css";
 
-import App from './App.vue'
-import router from './router'
+import App from "./App.vue";
+import router from "./router";
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(createPinia())
-app.use(MorphemeUI)
-app.use(router)
+app.use(createPinia());
+app.use(router);
 
-app.mount('#app')
+app.mount("#app");
