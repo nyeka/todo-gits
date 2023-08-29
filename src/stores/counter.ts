@@ -17,16 +17,16 @@ export const useCounterStore = defineStore('counter', {
 
   getters: {
     getTodoCompleted(): ITodo[] {
-      return this.Todo.filter((item: any) => item.completed === true)
+      return this.Todo.filter((item: ITodo) => item.completed === true)
     },
     activeTodo(): ITodo[] {
-      return this.Todo.filter((item: any) => item.completed === false)
+      return this.Todo.filter((item: ITodo) => item.completed === false)
     },
     getAllTodo(): ITodo[] {
       return this.Todo
     },
     getAllLengthTodo(): number {
-      return this.Todo.filter((item: any) => item.completed === false).length
+      return this.Todo.filter((item: ITodo) => item.completed === false).length
     }
   },
 
@@ -38,7 +38,11 @@ export const useCounterStore = defineStore('counter', {
     },
     async deleteTodo(id: number): Promise<void> {
       try {
-        await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+        const response = await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+
+        if (response.status === 200) {
+          this.Todo = this.Todo.filter((item) => item.id !== id)
+        }
       } catch (error) {
         console.log(error)
       }
@@ -49,7 +53,7 @@ export const useCounterStore = defineStore('counter', {
       try {
         await axios.put(`https://jsonplaceholder.typicode.com/todos/${id}`, {
           title: this.Todo[index].title,
-          completed: !this.Todo[index].completed,
+          completed: this.Todo[index].completed,
           userId: 1,
           id
         })
