@@ -1,50 +1,9 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <div class="main">
-    <div class="wrapper">
-      <nav class="nav">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/todo">Todo</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-      <span class="line"></span>
-      <RouterView />
-    </div>
+  <div>
+    <RouterView />
   </div>
 </template>
-
-<style scoped>
-.main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #242424;
-  color-scheme: light dark;
-  color: white;
-}
-
-.wrapper {
-  margin: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80vw;
-  gap: 24px;
-}
-
-.line {
-  background-color: white;
-  height: 1px;
-  width: 100%;
-}
-
-.nav {
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  font-size: 24px;
-}
-</style>

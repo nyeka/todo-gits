@@ -1,76 +1,81 @@
-import { defineStore } from 'pinia'
-import axios from 'axios'
+import { defineStore } from "pinia";
+import axios from "axios";
 
-interface ITodo {
-  userId?: number
-  id?: number
-  title: string
-  completed: boolean
+export interface ITodo {
+  userId?: number;
+  id: number;
+  title: string;
+  completed: boolean;
 }
 
-export const useCounterStore = defineStore('counter', {
+export const useCounterStore = defineStore("counter", {
   state: () => ({
     Todo: [] as ITodo[],
-    loading: false
+    loading: false,
   }),
 
   getters: {
     getTodoCompleted(): ITodo[] {
-      return this.Todo.filter((item: any) => item.completed === true)
+      return this.Todo.filter((item: any) => item.completed === true);
     },
     activeTodo(): ITodo[] {
-      return this.Todo.filter((item: any) => item.completed === false)
+      return this.Todo.filter((item: any) => item.completed === false);
     },
     getAllTodo(): ITodo[] {
-      return this.Todo
+      return this.Todo;
     },
     getAllLengthTodo(): number {
-      return this.Todo.filter((item: any) => item.completed === false).length
-    }
+      return this.Todo.filter((item: any) => item.completed === false).length;
+    },
   },
 
   actions: {
     async fetchTodo(): Promise<void> {
-      this.loading = true
-      await axios.get('https://jsonplaceholder.typicode.com/todos').then((res) => {
-        this.Todo = res.data.slice(0, 10)
-      })
-      this.loading = false
+      this.loading = true;
+      await axios
+        .get("https://jsonplaceholder.typicode.com/todos")
+        .then((res) => {
+          this.Todo = res.data.slice(0, 10);
+        });
+      this.loading = false;
     },
     async clearTodo(): Promise<void> {
-      this.loading = true
+      this.loading = true;
       this.getTodoCompleted.forEach(async (item) => {
-        Promise.all([await this.deleteTodo(Number(item.id))])
-      })
+        Promise.all([await this.deleteTodo(Number(item.id))]);
+      });
 
-      this.loading = false
+      this.loading = false;
     },
+
     async deleteTodo(id: number): Promise<void> {
       try {
-        const response = await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+        const response = await axios.delete(
+          `https://jsonplaceholder.typicode.com/todos/${id}`
+        );
 
         if (response.status === 200) {
-          this.Todo = this.Todo.filter((item) => item.id !== id)
+          this.Todo = this.Todo.filter((item) => item.id !== id);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
     async pushTodoActive(id: number) {
-      const index = this.Todo.findIndex((item) => item.id === id)
-      this.Todo[index].completed = !this.Todo[index].completed
+      const index = this.Todo.findIndex((item) => item.id === id);
+      this.Todo[index].completed = !this.Todo[index].completed;
       try {
         await axios.put(`https://jsonplaceholder.typicode.com/todos/${id}`, {
           title: this.Todo[index].title,
           completed: this.Todo[index].completed,
           userId: 1,
-          id
-        })
+          id,
+        });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
-  }
+    },
+  },
 
   // const fetchTodo = async () => {
   //   await axios.get('https://jsonplaceholder.typicode.com/todos').then((res) => {
@@ -126,4 +131,4 @@ export const useCounterStore = defineStore('counter', {
   //   GetLengthItem,
   //   pushTodoActive
   // }
-})
+});

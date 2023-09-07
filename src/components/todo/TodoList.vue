@@ -21,26 +21,30 @@
 
         <p class="text-lg">{{ todo.title }}</p>
       </div>
-      <span class="text-xl cursor-pointer" @click="state.deleteTodo(Number(todo.id))">X</span>
+      <span
+        class="text-xl cursor-pointer"
+        @click="state.deleteTodo(Number(todo.id))"
+        >X</span
+      >
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useCounterStore } from '@/stores/counter'
-const state = useCounterStore()
+import { useCounterStore } from "@/stores/counter";
+const state = useCounterStore();
 
 interface ITodo {
-  userId?: number
-  id?: number
-  title: string
-  completed: boolean
+  userId?: number;
+  id?: number;
+  title: string;
+  completed: boolean;
 }
 
 defineProps({
   Todo: {
     type: Array as () => ITodo[],
-    required: true
-  }
-})
+    required: true,
+  },
+});
 </script>
