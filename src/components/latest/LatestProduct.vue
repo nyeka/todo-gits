@@ -10,7 +10,7 @@ const { screenWidth } = useGetScreenSize()
 </script>
 
 <template>
-  <div class="p-[32px]">
+  <div class="p-[32px] relative">
     <Section text="Latest Product" />
     <div class="flex py-[24px]">
       <div class="rounded-[8px] bg-[#28A0F6] md:w-[952px] p-[32px] md:h-[494px] hidden md:block">
@@ -35,6 +35,11 @@ const { screenWidth } = useGetScreenSize()
           <Items />
         </swiper-slide>
       </swiper>
+      <div
+        class="absolute content top-[50%] right-[5%] md:right-[2%] z-[2] bg-[#0000004D] p-[8px] rounded-[99px] text-[#fff]"
+      >
+        <img src="/src/assets/chevron.svg" alt="chevron" />
+      </div>
     </div>
   </div>
 </template>

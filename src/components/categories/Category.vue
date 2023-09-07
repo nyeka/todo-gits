@@ -74,4 +74,3 @@ document.querySelector('.logos')?.appendChild(slide)
   animation: 5s slide infinite linear;
 }
 </style>
-../hook/useGetScreen
